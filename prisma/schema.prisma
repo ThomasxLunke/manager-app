@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  email     String    @unique
+  password  String
+  firstName String?
+  lastName  String?
+  projects  Project[]
+  tasks     Task[]
+}
+
+model Project {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ownerId String
+  //create a relation with User which reference the id of a user, and put it in the field ownerId
+  // to create "projects Project[]" in the User model automaticaly use : npx prisma format
+  owner   User   @relation(fields: [ownerId], references: [id])
+
+  name        String
+  description String?
+  due         DateTime?
+  tasks       Task[]
+  //GOOD PRACTICE : flag your entity as deleted so we can restore data (data is never deleted with this method)
+  deleted     Boolean   @default(false)
+
+  //constrat so you can't have a project of 1 owner with the same name
+  //(u can't have 2 times the same couples ownerId/name)
+  @@unique([ownerId, name])
+  //GOOD PRACTICE : permet de créer un index basé sur le même ownerID mais avec un id (project) précis
+  @@index([ownerId, id])
+}
+
+enum TASK_STATUS {
+  NOT_STARTED
+  STARTED
+  COMPLETED
+}
+
+model Task {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ownerId String
+  owner   User   @relation(fields: [ownerId], references: [id])
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id])
+
+  status      TASK_STATUS @default(NOT_STARTED)
+  name        String
+  description String
+
+  due     DateTime?
+  deleted Boolean   @default(false)
+
+  //index qui classe les Task par ownerId pour la query "give me all the Task of a User"
+  @@index([ownerId])
+}
