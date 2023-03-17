@@ -1,6 +1,6 @@
-import { db } from "../lib/db.js";
+import { db } from "./../lib/db.js";
 import { TASK_STATUS } from "@prisma/client";
-import { hashPassword } from "../lib/auth.js";
+import { hashPassword } from "./../lib/auth.js";
 
 const getRandomTaskStatus = () => {
   const statuses = [

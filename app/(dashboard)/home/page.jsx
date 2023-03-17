@@ -1,5 +1,8 @@
 import Greeting from "@/components/Greeting";
 import GreetingSkeleton from "@/components/GreetingSkeleton";
+import ProjectCard from "@/components/ProjectCard";
+import TaskCard from "@/components/TaskCard";
+import NewProject from "@/components/NewProject";
 import { delay } from "@/lib/async";
 import { getUserFromCookie } from "@/lib/auth";
 import { db } from "@/lib/db";
@@ -12,7 +15,7 @@ const getData = async () => {
     const user = await getUserFromCookie(cookies());
     const projects = await db.project.findMany({
         where: {
-            ownerId: user.id,
+            ownerId: user?.id,
         },
         include: {
             tasks: true,
@@ -21,15 +24,20 @@ const getData = async () => {
 
     return { projects };
 };
-
 export default async function Page() {
 
+    //1st : THIS LOAD BEFORE RENDER THE JSX BECAUSE 
+    // THE DATA IS LOADED INSIDE THIS COMPONENT (getData())
+    // IT'S A SERVER COMPONENT SO THE DATA FETCH IS SERVER-SIDE 
+    // (the datas are fetched when the component is rendered)
     const { projects } = await getData();
 
+    //2nd : THEN THE JSX LOAD
     return (
         <div className="h-full pl-3 w-full">
             <div className=" h-full items-stretch justify-center min-h-[content]">
                 <div className="flex-1 grow flex">
+                    {/* 3th : THIS LOAD */}
                     <Suspense fallback={<GreetingSkeleton />}>
                         <Greeting />
                     </Suspense>
@@ -44,10 +52,10 @@ export default async function Page() {
                             </div>
                         ))
                     }
-                    <div className="w-1/3 p-3">{/* new project here */}</div>
+                    <div className="w-1/3 p-3"> <NewProject/> </div>
                 </div>
                 <div className="mt-6 flex-2 grow w-full flex">
-                    <div className="w-full">{/* tasks here */}</div>
+                    <div className="w-full"> <TaskCard/> </div>
                 </div>
             </div>
         </div>
