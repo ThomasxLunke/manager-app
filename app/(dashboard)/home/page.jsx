@@ -34,8 +34,8 @@ export default async function Page() {
 
     //2nd : THEN THE JSX LOAD
     return (
-        <div className="h-full pl-3 w-full">
-            <div className=" h-full items-stretch justify-center min-h-[content]">
+        <div className="h-full pl-3 w-full overflow-x-hidden">
+            <div className=" h-full items-stretch justify-center min-h-[content] mr-6">
                 <div className="flex-1 grow flex">
                     {/* 3th : THIS LOAD */}
                     <Suspense fallback={<GreetingSkeleton />}>
