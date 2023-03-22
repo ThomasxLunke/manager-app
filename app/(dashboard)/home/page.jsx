@@ -11,11 +11,12 @@ import Link from "next/link";
 import { Suspense } from "react";
 
 const getData = async () => {
-    await delay(2000);
+    //await delay(2000);
     const user = await getUserFromCookie(cookies());
     const projects = await db.project.findMany({
         where: {
             ownerId: user?.id,
+            deleted: false
         },
         include: {
             tasks: true,
@@ -53,9 +54,6 @@ export default async function Page() {
                         ))
                     }
                     <div className="w-1/3 p-3"> <NewProject/> </div>
-                </div>
-                <div className="mt-6 flex-2 grow w-full flex">
-                    <div className="w-full"> <TaskCard/> </div>
                 </div>
             </div>
         </div>

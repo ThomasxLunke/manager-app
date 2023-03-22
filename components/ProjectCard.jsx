@@ -11,10 +11,13 @@ const formatDate = (date) =>
   });
 
 const ProjectCard = ({ project }) => {
+
   const completedCount = project.tasks.filter(
     (t) => t.status === "COMPLETED"
   ).length;
-  const progress = Math.ceil((completedCount / project.tasks.length) * 100);
+  let progress = Math.ceil((completedCount / project.tasks.length) * 100);
+  if (isNaN(progress))
+    progress = 0
 
   return (
     <Card className="!px-6 !py-8 hover:scale-105 transition-all ease-in-out duration-200">
