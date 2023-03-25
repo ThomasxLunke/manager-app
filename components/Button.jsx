@@ -39,6 +39,12 @@ const buttonClasses = cva(
           "text-white",
           "border-transparent",
           "hover:bg-red-600"
+        ],
+        cancel: [
+          "bg-gray-500",
+          "text-white",
+          "border-transparent",
+          "hover:bg-gray-600"
         ]
       },
       size: {

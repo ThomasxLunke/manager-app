@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 
 
 
-const DeleteProject = ({projectId}) => {
+const DeleteProject = ({ projectId }) => {
 
     const [modalIsOpen, setIsOpen] = useState(false);
     const openModal = () => setIsOpen(true);
@@ -36,8 +36,9 @@ const DeleteProject = ({projectId}) => {
                 className="w-2/4 bg-white rounded-xl p-8"
             >
                 <h1 className="text-3xl mb-6 text-center">Do you really want to delete this project ?</h1>
-                <form className="flex items-center justify-center" onSubmit={handleSubmit}>
+                <form className="flex items-center justify-center gap-12 " onSubmit={handleSubmit}>
                     <Button type="submit" intent="delete">Delete</Button>
+                    <Button intent="cancel" onClick={() => closeModal()}>Cancel</Button>
                 </form>
             </Modal>
         </div>

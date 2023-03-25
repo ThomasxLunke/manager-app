@@ -3,6 +3,7 @@ import { getUserFromCookie } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { cookies } from "next/headers"
 
+export const revalidate = 100
 
 const getData = async (id) => {
     const user = await getUserFromCookie(cookies())
@@ -12,12 +13,17 @@ const getData = async (id) => {
             id,
             ownerId: user?.id
         },
-        include: {
-            tasks: true
+        select: {
+            tasks: {
+                where: {
+                    deleted:false
+                }
+            },
+            name:true,
+            id:true
         }
     })
-
-    return  project 
+    return project 
 }
 
 

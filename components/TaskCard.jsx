@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 import Button from "./Button";
 import Card from "./Card";
 import DeleteProject from "./DeleteProject";
+import Task from "./Task";
 
 const getData = async () => {
   const user = await getUserFromCookie(cookies());
@@ -26,7 +27,7 @@ const getData = async () => {
 };
 const TaskCard = async ({ title, tasks, projectId }) => {
   const data = tasks || (await getData());
-  
+
 
   return (
     <Card>
@@ -39,23 +40,14 @@ const TaskCard = async ({ title, tasks, projectId }) => {
             + Create new task
           </Button>
           <DeleteProject projectId={projectId} />
-          
+
         </div>
       </div>
       <div>
         {data && data.length ? (
           <div>
             {data.map((task) => (
-              <div className="py-2 " key={task.id}>
-                <div>
-                  <span className="text-gray-800">{task.name}</span>
-                </div>
-                <div>
-                  <span className="text-gray-400 text-sm">
-                    {task.description}
-                  </span>
-                </div>
-              </div>
+              <Task id={task.id} name={task.name} description={task.description} key={task.id} />
             ))}
           </div>
         ) : (
