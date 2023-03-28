@@ -71,9 +71,6 @@ export default function AuthForm({ mode }) {
           {mode === "register" && (
             <div className="flex mb-8 justify-between">
               <div className="pr-2">
-                <div className="text-lg mb-4 ml-2 text-black/50">
-                  Prénom
-                </div>
                 <Input
                   required
                   placeholder="Prénom"
@@ -85,7 +82,6 @@ export default function AuthForm({ mode }) {
                 />
               </div>
               <div className="pl-2">
-                <div className="text-lg mb-4 ml-2 text-black/50">Nom de famille</div>
                 <Input
                   required
                   placeholder="Nom de famille"
@@ -99,7 +95,6 @@ export default function AuthForm({ mode }) {
             </div>
           )}
           <div className="mb-8">
-            <div className="text-lg mb-4 ml-2 text-black/50">Email</div>
             <Input
               required
               type="email"
@@ -112,7 +107,6 @@ export default function AuthForm({ mode }) {
             />
           </div>
           <div className="mb-4">
-            <div className="text-lg mb-4 ml-2 text-black/50">Mot de passe</div>
             <Input
               required
               value={formState.password}

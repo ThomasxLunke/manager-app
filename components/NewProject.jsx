@@ -8,7 +8,7 @@ import Input from "./Input";
 //It's a React Poral : it's rendered outside of the react tree
 //look at dashboard/project/layout l 14
 Modal.setAppElement("#modal");
-
+  //lol
 const NewProject = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const openModal = () => setIsOpen(true);
@@ -29,14 +29,15 @@ const NewProject = () => {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         overlayClassName="bg-[rgba(0,0,0,.4)] flex justify-center items-center absolute top-0 left-0 h-screen w-screen"
-        className="w-3/4 bg-white rounded-xl p-8"
+        className="w-1/3 bg-white rounded-xl p-8"
       >
-        <h1 className="text-3xl mb-6">New Project</h1>
-        <form className="flex items-center" onSubmit={handleSubmit}>
+        <h1 className="text-3xl mb-6 text-center">New Project</h1>
+        <form className="flex items-center flex-col" onSubmit={handleSubmit}>
           <Input
-            placeholder="project name"
+            placeholder="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            className="mb-6"
           />
           <Button type="submit">Create</Button>
         </form>
