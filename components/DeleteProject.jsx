@@ -19,7 +19,7 @@ const DeleteProject = ({ projectId }) => {
         e.preventDefault();
         deleteProject(projectId)
         closeModal();
-        router.replace("/home");
+        router.refresh();
     };
 
     return (

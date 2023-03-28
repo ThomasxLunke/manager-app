@@ -11,15 +11,14 @@ export default async function handler(req, res) {
     status = TASK_STATUS.STARTED
   else if(req.body.status === "NOT_STARTED")
     status = TASK_STATUS.NOT_STARTED
-  
-  await db.task.update({
-    where: {
-        id: req.body.id
-    },
+
+  await db.task.create({
     data: {
       name: req.body.name,
       description: req.body.description,
       status: status,
+      ownerId: user.id,
+      projectId: req.body.projectId
     },
   });
 

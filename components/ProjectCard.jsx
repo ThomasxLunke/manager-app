@@ -13,7 +13,7 @@ const formatDate = (date) =>
 const ProjectCard = ({ project }) => {
 
   const completedCount = project.tasks.filter(
-    (t) => t.status === "COMPLETED"
+    (t) => t.status === "COMPLETED" && t.deleted === false
   ).length;
   let progress = Math.ceil((completedCount / project.tasks.length) * 100);
   if (isNaN(progress))

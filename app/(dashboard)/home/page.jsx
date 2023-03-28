@@ -19,7 +19,11 @@ const getData = async () => {
             deleted: false
         },
         include: {
-            tasks: true,
+            tasks: {
+                where: {
+                    deleted: false
+                }
+            },
         },
     });
 

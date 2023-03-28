@@ -6,48 +6,25 @@ import Button from "./Button";
 import Card from "./Card";
 import DeleteProject from "./DeleteProject";
 import Task from "./Task";
+import EditProjectName from "./EditProjectName";
+import CreateTask from "./CreateTask";
 
-const getData = async () => {
-  const user = await getUserFromCookie(cookies());
-  const tasks = await db.task.findMany({
-    where: {
-      ownerId: user?.id,
-      NOT: {
-        status: TASK_STATUS.COMPLETED,
-        deleted: true,
-      },
-    },
-    take: 5,
-    orderBy: {
-      due: "asc",
-    },
-  });
-
-  return tasks;
-};
 const TaskCard = async ({ title, tasks, projectId }) => {
-  const data = tasks || (await getData());
-
 
   return (
     <Card>
       <div className="flex justify-between items-center mb-4">
-        <div>
-          <span className="text-3xl text-gray-600 font-bold">{title}</span>
-        </div>
-        <div className="flex">
-          <Button intent="text" className="text-violet-600">
-            + Create new task
-          </Button>
+        <EditProjectName title={title} projectId={projectId} />
+        <div className="flex gap-6">
+          <CreateTask projectId={projectId} />
           <DeleteProject projectId={projectId} />
-
         </div>
       </div>
       <div>
-        {data && data.length ? (
+        {tasks && tasks.length ? (
           <div>
-            {data.map((task) => (
-              <Task id={task.id} name={task.name} description={task.description} key={task.id} />
+            {tasks.map((task) => (
+              <Task task={task} key={task.id} />
             ))}
           </div>
         ) : (

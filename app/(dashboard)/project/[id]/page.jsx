@@ -16,22 +16,29 @@ const getData = async (id) => {
         select: {
             tasks: {
                 where: {
-                    deleted:false
+                    deleted: false
                 }
             },
-            name:true,
-            id:true
+            name: true,
+            id: true
         }
     })
-    return project 
+    return project
 }
 
 
 export default async function ProjectPage({ params }) {
-    const project = await getData(params.id)
+    const order = { COMPLETED: 1, STARTED: 2, NOT_STARTED: 3 };
+    const project = await getData(params.id).then((value) => {
+        const tasks = value.tasks
+        tasks.sort(function (a, b) {
+            return order[a.status] - order[b.status]
+        })
+        return value
+    });
 
     return (
-        <div className="h-full overflow-y-auto w-full pl-4"> 
+        <div className="h-full overflow-y-auto w-full pl-4">
             <TaskCard tasks={project.tasks} title={project.name} projectId={project.id} />
         </div>
     )
