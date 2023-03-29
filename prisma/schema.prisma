@@ -40,9 +40,9 @@ model Project {
   //GOOD PRACTICE : flag your entity as deleted so we can restore data (data is never deleted with this method)
   deleted     Boolean   @default(false)
 
-  //constrat so you can't have a project of 1 owner with the same name
+  //constraint so you can't have a project of 1 owner with the same name
   //(u can't have 2 times the same couples ownerId/name)
-  @@unique([ownerId, name])
+  @@unique([ownerId, name, deleted])
   //GOOD PRACTICE : permet de créer un index basé sur le même ownerID mais avec un id (project) précis
   @@index([ownerId, id])
 }

@@ -13,7 +13,7 @@ export default async function signin(req,res) {
     if (!user) {
       res.status(401);
       res.json({ error: "Invalid login" });
-      return;
+      return
     }
 
     const isUser = await comparePasswords(req.body.password, user.password);

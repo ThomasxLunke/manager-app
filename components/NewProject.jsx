@@ -1,24 +1,30 @@
 "use client";
 import { createNewProject } from "@/lib/api";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Modal from "react-modal";
 import Button from "./Button";
 import Input from "./Input";
 
-//It's a React Poral : it's rendered outside of the react tree
+//It's a React Portal : it's rendered outside of the react tree
 //look at dashboard/project/layout l 14
 Modal.setAppElement("#modal");
-  //lol
+const initial = { name: "" }
+
 const NewProject = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
-  const [name, setName] = useState("");
+  const router = useRouter()
+  const [formState, setFormState] = useState({ ...initial });
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await createNewProject(name);
+    await createNewProject(formState.name);
     closeModal();
+    setFormState({ ...initial });
+    router.refresh()
   };
 
   return (
@@ -35,8 +41,8 @@ const NewProject = () => {
         <form className="flex items-center flex-col" onSubmit={handleSubmit}>
           <Input
             placeholder="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={formState.name}
+            onChange={(e) => setFormState((s) => ({ ...s, name: e.target.value }))}
             className="mb-6"
           />
           <Button type="submit">Create</Button>

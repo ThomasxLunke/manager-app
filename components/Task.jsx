@@ -43,7 +43,6 @@ const Task = ({ task, intent }) => {
         async (e) => {
             e.preventDefault();
             if (typeModal === "edit") {
-                console.log(formState)
                 try {
                     await updateTask(formState.name, formState.description, formState.status, task.id)
                     closeModal();

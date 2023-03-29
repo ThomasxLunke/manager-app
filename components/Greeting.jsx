@@ -2,8 +2,8 @@ import { getUserFromCookie } from "@/lib/auth";
 import { cookies } from "next/headers";
 import Button from "./Button";
 import Card from "./Card";
-import { delay } from "@/lib/async";
-import Image from 'next/image';
+import ProfilePicture from "./ProfilePicture";
+import Image from "next/image";
 
 const getData = async () => {
   //await delay(1000);
@@ -18,8 +18,6 @@ const Greeting = async () => {
     profilePic = value.profilePic !== null ? value.profilePic : "/base-profil-pic.png"
     return value
   });
-
-
 
   return (
     <Card className="w-full py-4 relative flex justify-between">
@@ -39,15 +37,7 @@ const Greeting = async () => {
       </div>
 
       <div>
-        <div className="w-40 h-40 rounded-xl overflow-hidden">
-          <Image
-            src={profilePic}
-            className="object-cover"
-            alt="Profile Picture"
-            width={500}
-            height={500}
-          />
-        </div>
+          <ProfilePicture profilePic={profilePic} userId={user.id}/>
       </div>
 
     </Card>

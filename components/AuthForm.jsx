@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Card from "./Card";
 import Button from "./Button";
 import Input from "./Input";
+import { delay } from "@/lib/async";
 
 const registerContent = {
   linkUrl: "/signin",
@@ -29,26 +30,33 @@ export default function AuthForm({ mode }) {
 
   const [formState, setFormState] = useState({ ...initial });
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState("")
 
   const router = useRouter();
-  
+
   const handleSubmit = useCallback(
     async (e) => {
       e.preventDefault();
-
+      setIsLoading(true)
       try {
         if (mode === "register") {
           await register(formState);
         } else {
-          await signin(formState);
+          await signin(formState)  
         }
+        setErrorMessage("")
         router.replace("/home");
-      } 
+        setFormState({ ...initial })
+      }
       catch (e) {
         setError(`Could not ${mode}`);
-      } finally {
-        setFormState({ ...initial });
+        if (mode === "signin")
+          setErrorMessage("Email or password undefined")
+        if (mode === "register")
+          setErrorMessage("Email already used")
       }
+      setIsLoading(false)
     },
     [
       formState.email,
@@ -79,6 +87,7 @@ export default function AuthForm({ mode }) {
                   onChange={(e) =>
                     setFormState((s) => ({ ...s, firstName: e.target.value }))
                   }
+                  disabled={isLoading ? true : false}
                 />
               </div>
               <div className="pl-2">
@@ -90,10 +99,12 @@ export default function AuthForm({ mode }) {
                   onChange={(e) =>
                     setFormState((s) => ({ ...s, lastName: e.target.value }))
                   }
+                  disabled={isLoading ? true : false}
                 />
               </div>
             </div>
           )}
+          <p className="text-red-500">{errorMessage}</p>
           <div className="mb-8">
             <Input
               required
@@ -104,6 +115,7 @@ export default function AuthForm({ mode }) {
               onChange={(e) =>
                 setFormState((s) => ({ ...s, email: e.target.value }))
               }
+              disabled={isLoading ? true : false}
             />
           </div>
           <div className="mb-4">
@@ -116,6 +128,7 @@ export default function AuthForm({ mode }) {
               onChange={(e) =>
                 setFormState((s) => ({ ...s, password: e.target.value }))
               }
+              disabled={isLoading ? true : false}
             />
           </div>
           <div className="flex items-center justify-between flex-col">
@@ -130,8 +143,8 @@ export default function AuthForm({ mode }) {
               </span>
             </div>
             <div>
-              <Button type="submit" intent="secondary">
-                {content.buttonText}
+              <Button type="submit" intent={isLoading ? "loading" : "secondary"} disabled={isLoading ? true : false}>
+                {isLoading ? "Loading" : content.buttonText}
               </Button>
             </div>
           </div>

@@ -11,7 +11,7 @@ import { createNewTask } from "@/lib/api";
 
 const initial = { name: "", description: "", status: "" };
 
-const CreateTask = ({projectId}) => {
+const CreateTask = ({ projectId }) => {
 
     const [formState, setFormState] = useState({ ...initial });
     const [modalIsOpen, setIsOpen] = useState(false);
@@ -20,7 +20,6 @@ const CreateTask = ({projectId}) => {
     const router = useRouter()
 
     const handleSubmit = useCallback(
-        
         async (e) => {
             e.preventDefault();
             try {
@@ -42,7 +41,7 @@ const CreateTask = ({projectId}) => {
             formState.status,
         ]
     );
-    
+
     return (
         <div>
             <Button intent="text" className="text-violet-600" onClick={() => { openModal() }}>
