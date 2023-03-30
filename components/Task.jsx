@@ -8,7 +8,6 @@ import Modal from "react-modal";
 import Button from "./Button";
 import Input from "./Input";
 import { deleteTask, updateTask } from "@/lib/api";
-import { cva } from "class-variance-authority";
 import TextArea from "./TextArea";
 import Select from "./Select";
 
@@ -16,7 +15,7 @@ import Select from "./Select";
 
 const initial = { name: "", description: "", status: "" };
 
-const Task = ({ task, intent }) => {
+const Task = ({ task }) => {
 
     const [modalIsOpen, setIsOpen] = useState(false);
     const [typeModal, setTypeModal] = useState("")
@@ -45,6 +44,7 @@ const Task = ({ task, intent }) => {
             if (typeModal === "edit") {
                 try {
                     await updateTask(formState.name, formState.description, formState.status, task.id)
+                    setTaskStatus(formState.status)
                     closeModal();
                     router.refresh();
                 }
@@ -53,7 +53,6 @@ const Task = ({ task, intent }) => {
                     setError(`Could not edit`);
                 } finally {
                     closeModal();
-                    setFormState({ ...initial });
                 }
             }
             else {

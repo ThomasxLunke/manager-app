@@ -52,7 +52,6 @@ export default async function middleware(req, res) {
     await verifyJWT(jwt.value);
     return NextResponse.next();
   } catch (e) {
-    console.error(e);
     req.nextUrl.pathname = "/signin";
     return NextResponse.redirect(req.nextUrl);
   }

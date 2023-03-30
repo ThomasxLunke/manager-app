@@ -1,6 +1,5 @@
 "use client"
-import React, { useState } from "react"
-import Avatar from "react-avatar-edit"
+import React, { useEffect, useState } from "react"
 import ReactDOM from 'react-dom'
 import Image from "next/image"
 import Modal from "react-modal";
@@ -9,8 +8,10 @@ import { updateUseProfilPic } from "@/lib/api"
 import { useRouter } from "next/navigation"
 import { Edit } from "react-feather"
 import clsx from "clsx"
-
-// <img src={preview} alt="preview" />
+import dynamic from 'next/dynamic'
+const Avatar = dynamic(() => import('react-avatar-edit'), {
+    ssr: false
+})
 
 const ProfilePicture = ({ profilePic, userId }) => {
     const [image, setImage] = useState(null)
@@ -46,9 +47,9 @@ const ProfilePicture = ({ profilePic, userId }) => {
                 width={500}
                 height={500}
                 priority={true}
-                
+
             />
-            <div    
+            <div
                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center hover:bg-violet-600 rounded px-4 py-2 gap-2 group flex cursor-pointer items-center text-white"
                 onClick={() => { setIsEdit(true); openModal() }}
             >
@@ -57,7 +58,7 @@ const ProfilePicture = ({ profilePic, userId }) => {
                     className={clsx(
                         " stroke-white invisible group-hover:visible",
                     )}
-                    onClick={() => {}}
+                    onClick={() => { }}
                 />
                 <p className="font-bold invisible group-hover:visible">Edit</p>
             </div>
