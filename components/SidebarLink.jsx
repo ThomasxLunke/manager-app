@@ -1,6 +1,6 @@
 "use client"; //for client component
 import Link from "next/link";
-import { Settings, User, Grid, Calendar } from "react-feather";
+import { User, Grid, Calendar, LogOut } from "react-feather";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 
@@ -12,7 +12,7 @@ import clsx from "clsx";
 
 //think that there is a redline between server component and client component
 //to pass props accross this redline, you need your props to be serializable data (string, int, object, ...)
-const icons = { Settings, User, Grid, Calendar };
+const icons = { LogOut, User, Grid, Calendar };
 
 const SidebarLink = ({ link }) => {
     const pathname = usePathname();
@@ -23,7 +23,7 @@ const SidebarLink = ({ link }) => {
     }
 
     const Icon = icons[link.icon];
-    //here, Icon is replaced by Settings, User, Grid or Calendar, and use react-feather
+    //here, Icon is replaced by LogOut, User, Grid or Calendar, and use react-feather
 
     return (
         <Link href={link.link} className="w-full flex justify-center items-center">
