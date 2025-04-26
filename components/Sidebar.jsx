@@ -1,5 +1,6 @@
 import Card from "./Card";
 import SidebarLink from "./SidebarLink";
+import SignoutButton from "./SignoutButton";
 
 const links = [
   {
@@ -17,11 +18,7 @@ const links = [
     icon: "User",
     link: "/profile"
   },
-  {
-    label: "Logout",
-    icon: "LogOut",
-    link: "/signin",
-  },
+
 ];
 
 const Sidebar = () => {
@@ -30,6 +27,7 @@ const Sidebar = () => {
       {links.map((link) => (
         <SidebarLink key={link.link} link={link} />
       ))}
+      <SignoutButton />
     </Card>
   );
 };

@@ -1,18 +1,11 @@
-"use client"; //for client component
+"use client";
+
 import Link from "next/link";
-import { User, Grid, Calendar, LogOut } from "react-feather";
+import { User, Grid, Calendar } from "react-feather";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 
-//you can't pass a component as a property (everything not serializable(generally something including logic ),
-// not static data ), from a server component to client component
-
-//here, this client component is rendered inside a server component (Sidebar)
-//so here an object (that is serializable)
-
-//think that there is a redline between server component and client component
-//to pass props accross this redline, you need your props to be serializable data (string, int, object, ...)
-const icons = { LogOut, User, Grid, Calendar };
+const icons = { User, Grid, Calendar };
 
 const SidebarLink = ({ link }) => {
     const pathname = usePathname();
@@ -23,7 +16,6 @@ const SidebarLink = ({ link }) => {
     }
 
     const Icon = icons[link.icon];
-    //here, Icon is replaced by LogOut, User, Grid or Calendar, and use react-feather
 
     return (
         <Link href={link.link} className="w-full flex justify-center items-center">
