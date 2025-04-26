@@ -10,18 +10,18 @@ import { delay } from "@/lib/async";
 
 const registerContent = {
   linkUrl: "/signin",
-  linkText: "Vous avez déjà un compte ?",
-  header: "Créer un compte",
-  subheader: "Juste quelque renseignements pour commencer",
-  buttonText: "S'enregistrer",
+  linkText: "Already have an account?",
+  header: "Create an account",
+  subheader: "Just some information to get you started",
+  buttonText: "Register",
 };
 
 const signinContent = {
   linkUrl: "/register",
-  linkText: "Vous n'avez pas encore de compte ?",
-  header: "Content de vous revoir !",
-  subheader: "Saisissez vos identifiants pour accéder à votre compte",
-  buttonText: "Se connecter",
+  linkText: "You don't have an account yet ?",
+  header: "Happy to see you again !",
+  subheader: "Enter your login details to access your account",
+  buttonText: "Sign in",
 };
 
 const initial = { email: "", password: "", firstName: "", lastName: "" };
@@ -43,7 +43,7 @@ export default function AuthForm({ mode }) {
         if (mode === "register") {
           await register(formState);
         } else {
-          await signin(formState)  
+          await signin(formState)
         }
         setErrorMessage("")
         router.replace("/home");
