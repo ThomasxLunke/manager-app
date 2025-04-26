@@ -3,7 +3,7 @@
 import { signout } from '@/lib/api'
 import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
-import React, { useCallback } from 'react'
+import React from 'react'
 import { LogOut } from 'react-feather'
 
 

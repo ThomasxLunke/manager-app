@@ -31,18 +31,12 @@ const getData = async () => {
 };
 export default async function Page() {
 
-    //1st : THIS LOAD BEFORE RENDER THE JSX BECAUSE 
-    // THE DATA IS LOADED INSIDE THIS COMPONENT (getData())
-    // IT'S A SERVER COMPONENT SO THE DATA FETCH IS SERVER-SIDE 
-    // (the datas are fetched when the component is rendered)
     const { projects } = await getData();
 
-    //2nd : THEN THE JSX LOAD
     return (
         <div className="h-full pl-3 w-full overflow-x-hidden">
             <div className=" h-full items-stretch justify-center min-h-[content] mr-6">
                 <div className="flex-1 grow flex">
-                    {/* 3th : THIS LOAD */}
                     <Suspense fallback={<GreetingSkeleton />}>
                         <Greeting />
                     </Suspense>
@@ -57,7 +51,7 @@ export default async function Page() {
                             </div>
                         ))
                     }
-                    <div className="w-1/3 p-3"> <NewProject/> </div>
+                    <div className="w-1/3 p-3"> <NewProject /> </div>
                 </div>
             </div>
         </div>
